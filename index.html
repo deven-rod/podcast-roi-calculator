@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Podcast ROI Calculator — PodcastGuest.io</title>
+<meta name="description" content="Estimate the new revenue your business could generate from booking guest appearances on podcasts, based on your close rate, deal value, and reach.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%239A7B4F'/%3E%3Ctext x='50' y='70' font-size='58' font-family='Georgia,serif' font-weight='700' fill='white' text-anchor='middle'%3E%24%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: #FAF8F4; font-family: "Instrument Sans", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent, #9A7B4F); text-decoration: none; }
+  a:hover { color: var(--accentHover, #7E6440); }
+  input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background: linear-gradient(90deg, var(--accent,#9A7B4F) var(--fill,0%), #E8E3DA var(--fill,0%)); outline:none; cursor:pointer; margin: 2px 0; }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:24px; height:24px; border-radius:50%; background:#fff; border:3px solid var(--accent,#9A7B4F); box-shadow:0 1px 2px rgba(0,0,0,0.04); cursor:pointer; transition: transform .12s ease; }
+  input[type=range]::-webkit-slider-thumb:hover{ transform: scale(1.1); }
+  input[type=range]::-moz-range-thumb{ width:24px; height:24px; border-radius:50%; background:#fff; border:3px solid var(--accent,#9A7B4F); cursor:pointer; }
+  input[type=range]::-moz-range-track{ height:8px; border-radius:999px; background:transparent; }
+
+  .cta-btn { transition: background .15s ease; }
+  .cta-btn:hover, .cta-btn:focus-visible { background: #7E6440 !important; }
+
+  @media (max-width: 480px) {
+    .roi-wrap { padding: 32px 14px !important; }
+    .roi-col-left, .roi-col-right { padding: 32px 22px !important; }
+    .roi-header { padding: 18px 22px !important; }
+    .roi-footer { padding: 16px 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="root-wrapper" class="roi-wrap" style="--accent: #9A7B4F; --accenthover: #7E6440; min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 48px 24px; background: #FAF8F4;">
+  <div style="width:100%; max-width:1120px; background:#FFFFFF; border:1px solid #E8E3DA; border-radius:16px; overflow:hidden; box-shadow:0 1px 2px rgba(0,0,0,0.04);">
+
+    <div class="roi-header" style="display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 34px; border-bottom:1px solid #E8E3DA;">
+      <div style="display:flex; align-items:center; gap:11px;">
+        <div style="width:30px; height:30px; border-radius:8px; border:1px solid #E8E3DA; display:flex; align-items:center; justify-content:center;">
+          <div style="width:11px; height:11px; border-radius:50%; border:2.5px solid var(--accent,#9A7B4F);"></div>
+        </div>
+        <span style="color:#1C1A17; font-weight:600; font-size:16px;">PodcastGuest<span style="color:var(--accent,#9A7B4F);">.io</span></span>
+      </div>
+      <span style="font-size:12px; letter-spacing:0.14em; color:#6B6459; text-transform:uppercase; font-weight:500;">ROI Calculator</span>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap;">
+
+      <div class="roi-col-left" style="flex:1 1 460px; padding:44px 40px; border-right:1px solid #E8E3DA;">
+        <div style="font-size:12px; letter-spacing:0.14em; color:var(--accent,#9A7B4F); text-transform:uppercase; font-weight:600; margin-bottom:16px;">The Podcast Math</div>
+        <h1 style="margin:0 0 12px; color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:clamp(30px,4vw,44px); font-weight:600; line-height:1.05; letter-spacing:-0.015em; text-wrap:balance;">What&rsquo;s getting booked on top podcasts <span style="font-style:italic; color:var(--accent,#9A7B4F);">actually worth?</span></h1>
+        <p style="margin:0 0 34px; color:#6B6459; font-size:16px; line-height:1.55; max-width:46ch;">Drag the sliders to match your business.</p>
+
+        <div style="display:flex; flex-direction:column; gap:30px;">
+
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Average client value</span>
+              <span id="dealValueFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">$8,000</span>
+            </div>
+            <input type="range" id="dealValueSlider" min="500" max="100000" step="500" value="8000" aria-label="Average client value" style="--fill: 7.5377%">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>$500</span><span>$100k</span></div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Close rate (warm lead)</span>
+              <span id="closeRateFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">30%</span>
+            </div>
+            <input type="range" id="closeRateSlider" min="5" max="90" step="5" value="30" aria-label="Close rate" style="--fill: 29.4118%">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>5%</span><span>90%</span></div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Avg listeners / episode</span>
+              <span id="listenersFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">1,500</span>
+            </div>
+            <input type="range" id="listenersSlider" min="100" max="50000" step="100" value="1500" aria-label="Average listeners per episode" style="--fill: 2.8056%">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>100</span><span>50k</span></div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Podcast appearances</span>
+              <span class="js-count" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">10</span>
+            </div>
+            <input type="range" id="appearancesSlider" min="1" max="30" step="1" value="10" aria-label="Podcast appearances" style="--fill: 31.0345%">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>1</span><span>30</span></div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Listeners who book a call</span>
+              <span id="convFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">1%</span>
+            </div>
+            <input type="range" id="convSlider" min="0.1" max="5" step="0.1" value="1" aria-label="Percent of listeners who book a call" style="--fill: 18.3673%">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>0.1%</span><span>5%</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="roi-col-right" style="flex:1 1 380px; padding:44px 40px; background:#FAF8F4; display:flex; flex-direction:column;">
+        <div style="font-size:12px; letter-spacing:0.14em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Projected new revenue</div>
+        <div id="heroRevenue" style="color:var(--accent,#9A7B4F); font-family:'Fraunces',Georgia,serif; font-size:clamp(46px,7.5vw,76px); font-weight:600; line-height:0.95; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; margin-bottom:8px;">$0</div>
+        <div style="color:#6B6459; font-size:14px; line-height:1.5; margin-bottom:30px;">from <span id="clientsFmt" style="color:#1C1A17; font-weight:600;">45</span> new clients booked across <span class="js-count">10</span> podcast appearances.</div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:30px;">
+          <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
+            <div id="callsFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">150</div>
+            <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Booked calls</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
+            <div id="revPerFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">$36,000</div>
+            <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Value / appearance</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
+            <div id="reachFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">15,000</div>
+            <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Total ears reached</div>
+          </div>
+          <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
+            <div class="js-count" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">10</div>
+            <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Podcasts booked</div>
+          </div>
+        </div>
+
+        <a id="ctaLink" href="#" class="cta-btn" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:18px 24px; background:var(--accent,#9A7B4F); color:#fff; font-size:16px; font-weight:600; border-radius:14px; box-shadow:0 1px 2px rgba(0,0,0,0.04);">
+          Book a Strategy Call
+          <span style="font-size:19px; line-height:1;">→</span>
+        </a>
+        <div style="text-align:center; color:#6B6459; font-size:13px; margin-top:12px;">Real numbers, real shows. Let&rsquo;s map your 90-day booking plan.</div>
+      </div>
+    </div>
+
+    <div class="roi-footer" style="padding:18px 34px; border-top:1px solid #E8E3DA;">
+      <p id="methodology" style="margin:0 0 10px; font-size:12px; line-height:1.6; color:#6B6459;">Estimate only, across 10 podcast appearances. Assumes ~1 in 100 listeners (1%) books a call with you per appearance, then applies your close rate. Actual results depend on show fit, your offer, and follow-up — the exact levers we dial in with clients.</p>
+      <p style="margin:0; font-size:11px; line-height:1.6; color:#A9A193;"><span style="font-weight:600; color:#6B6459;">Earnings disclaimer:</span> The figures shown are illustrative projections based on the inputs you select, not a promise, guarantee, or representation of actual or future earnings. Results vary and depend on many factors outside our control, including your offer, market, effort, and follow-through. PodcastGuest.io does not guarantee any specific outcome or amount of revenue. Nothing here constitutes financial, legal, or professional advice.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---- state (mirrors DCLogic.state from the design spec) ----
+  var state = {
+    dealValue: 8000,
+    closeRate: 30,
+    listeners: 1500,
+    appearances: 10,
+    conv: 1,
+    animatedRevenue: 0
+  };
+
+  var els = {
+    dealValueSlider: document.getElementById('dealValueSlider'),
+    closeRateSlider: document.getElementById('closeRateSlider'),
+    listenersSlider: document.getElementById('listenersSlider'),
+    appearancesSlider: document.getElementById('appearancesSlider'),
+    convSlider: document.getElementById('convSlider'),
+
+    dealValueFmt: document.getElementById('dealValueFmt'),
+    closeRateFmt: document.getElementById('closeRateFmt'),
+    listenersFmt: document.getElementById('listenersFmt'),
+    convFmt: document.getElementById('convFmt'),
+    countEls: document.querySelectorAll('.js-count'),
+
+    heroRevenue: document.getElementById('heroRevenue'),
+    clientsFmt: document.getElementById('clientsFmt'),
+    callsFmt: document.getElementById('callsFmt'),
+    revPerFmt: document.getElementById('revPerFmt'),
+    reachFmt: document.getElementById('reachFmt'),
+    methodology: document.getElementById('methodology'),
+
+    ctaLink: document.getElementById('ctaLink')
+  };
+
+  var rangeSpec = {
+    dealValueSlider: [500, 100000],
+    closeRateSlider: [5, 90],
+    listenersSlider: [100, 50000],
+    appearancesSlider: [1, 30],
+    convSlider: [0.1, 5]
+  };
+
+  // ---- formatting helpers (ported from DCLogic) ----
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function num(n) { return Math.round(n).toLocaleString('en-US'); }
+  function pct(v, min, max) { return ((v - min) / (max - min)) * 100; }
+
+  function count() { return state.appearances; }
+  function rate() { return state.conv / 100; }
+
+  function computeRevenue(s) {
+    s = s || state;
+    return s.listeners * rate() * count() * (s.closeRate / 100) * s.dealValue;
+  }
+
+  // ---- hero count-up tween (ported from DCLogic.tweenTo) ----
+  var raf = null;
+  function tweenTo(target) {
+    if (raf) cancelAnimationFrame(raf);
+    var start = state.animatedRevenue || 0;
+    var t0 = performance.now();
+    var dur = 550;
+    function step(now) {
+      var p = Math.min(1, (now - t0) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      state.animatedRevenue = start + (target - start) * eased;
+      els.heroRevenue.textContent = money(state.animatedRevenue);
+      if (p < 1) {
+        raf = requestAnimationFrame(step);
+      } else {
+        raf = null;
+      }
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  function setSliderFill(sliderEl, value, min, max) {
+    sliderEl.style.setProperty('--fill', pct(value, min, max) + '%');
+  }
+
+  // ---- render everything except the animated hero number ----
+  function renderStatic() {
+    var s = state;
+    var c = count();
+    var callsTotal = s.listeners * rate() * c;
+    var clientsTotal = callsTotal * (s.closeRate / 100);
+    var revenue = computeRevenue();
+    var revPerAppearance = c ? revenue / c : 0;
+    var reachTotal = s.listeners * c;
+    var oneIn = Math.round(100 / s.conv);
+
+    els.dealValueFmt.textContent = money(s.dealValue);
+    els.closeRateFmt.textContent = s.closeRate + '%';
+    els.listenersFmt.textContent = num(s.listeners);
+    els.convFmt.textContent = s.conv + '%';
+    for (var i = 0; i < els.countEls.length; i++) {
+      els.countEls[i].textContent = num(c);
+    }
+
+    setSliderFill(els.dealValueSlider, s.dealValue, rangeSpec.dealValueSlider[0], rangeSpec.dealValueSlider[1]);
+    setSliderFill(els.closeRateSlider, s.closeRate, rangeSpec.closeRateSlider[0], rangeSpec.closeRateSlider[1]);
+    setSliderFill(els.listenersSlider, s.listeners, rangeSpec.listenersSlider[0], rangeSpec.listenersSlider[1]);
+    setSliderFill(els.appearancesSlider, s.appearances, rangeSpec.appearancesSlider[0], rangeSpec.appearancesSlider[1]);
+    setSliderFill(els.convSlider, s.conv, rangeSpec.convSlider[0], rangeSpec.convSlider[1]);
+
+    els.clientsFmt.textContent = num(clientsTotal);
+    els.callsFmt.textContent = num(callsTotal);
+    els.revPerFmt.textContent = money(revPerAppearance);
+    els.reachFmt.textContent = num(reachTotal);
+
+    els.methodology.textContent = 'Estimate only, across ' + c + ' podcast appearances. Assumes ~1 in ' +
+      oneIn + ' listeners (' + s.conv + '%) books a call with you per appearance, then applies your close rate. ' +
+      'Actual results depend on show fit, your offer, and follow-up — the exact levers we dial in with clients.';
+
+    return revenue;
+  }
+
+  function set(key, val) {
+    state[key] = Number(val);
+    var revenue = renderStatic();
+    tweenTo(revenue);
+  }
+
+  els.dealValueSlider.addEventListener('input', function (e) { set('dealValue', e.target.value); });
+  els.closeRateSlider.addEventListener('input', function (e) { set('closeRate', e.target.value); });
+  els.listenersSlider.addEventListener('input', function (e) { set('listeners', e.target.value); });
+  els.appearancesSlider.addEventListener('input', function (e) { set('appearances', e.target.value); });
+  els.convSlider.addEventListener('input', function (e) { set('conv', e.target.value); });
+
+  // ---- CTA: only open in a new tab once a real booking link is set ----
+  function updateCtaTarget() {
+    var href = els.ctaLink.getAttribute('href');
+    if (href && href !== '#') {
+      els.ctaLink.setAttribute('target', '_blank');
+      els.ctaLink.setAttribute('rel', 'noopener noreferrer');
+    } else {
+      els.ctaLink.removeAttribute('target');
+      els.ctaLink.removeAttribute('rel');
+    }
+  }
+  updateCtaTarget();
+
+  // ---- initial paint + hero count-up from 0 (ported from componentDidMount) ----
+  var initialRevenue = renderStatic();
+  state.animatedRevenue = 0;
+  tweenTo(initialRevenue);
+})();
+</script>
+</body>
+</html>
