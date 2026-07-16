@@ -93,10 +93,19 @@
           <div>
             <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
               <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Listeners who book a call</span>
-              <span id="convFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">1%</span>
+              <span id="convFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">0.3%</span>
             </div>
-            <input type="range" id="convSlider" min="0.1" max="5" step="0.1" value="1" aria-label="Percent of listeners who book a call" style="--fill: 18.3673%">
+            <input type="range" id="convSlider" min="0.1" max="5" step="0.1" value="0.3" aria-label="Percent of listeners who book a call" style="--fill: 4.0816%">
             <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>0.1%</span><span>5%</span></div>
+          </div>
+
+          <div>
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px;">
+              <span style="font-size:13px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600;">Show rate (booked calls that attend)</span>
+              <span id="showRateFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:26px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">60%</span>
+            </div>
+            <input type="range" id="showRateSlider" min="1" max="100" step="1" value="60" aria-label="Show rate: booked calls that attend" style="--fill: 59.596%">
+            <div style="display:flex; justify-content:space-between; font-size:11px; color:#A9A193; margin-top:9px;"><span>1%</span><span>100%</span></div>
           </div>
 
         </div>
@@ -105,15 +114,16 @@
       <div class="roi-col-right" style="flex:1 1 380px; padding:44px 40px; background:#FAF8F4; display:flex; flex-direction:column;">
         <div style="font-size:12px; letter-spacing:0.14em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-bottom:12px;">Projected new revenue</div>
         <div id="heroRevenue" style="color:var(--accent,#9A7B4F); font-family:'Fraunces',Georgia,serif; font-size:clamp(46px,7.5vw,76px); font-weight:600; line-height:0.95; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; margin-bottom:8px;">$0</div>
-        <div style="color:#6B6459; font-size:14px; line-height:1.5; margin-bottom:30px;">from <span id="clientsFmt" style="color:#1C1A17; font-weight:600;">45</span> new clients booked across <span class="js-count">10</span> podcast appearances.</div>
+        <div style="color:#6B6459; font-size:14px; line-height:1.5; margin-bottom:8px;">from <span id="clientsFmt" style="color:#1C1A17; font-weight:600;">8</span> new clients booked across <span class="js-count">10</span> podcast appearances.</div>
+        <div style="font-size:12px; color:#A9A193; margin-bottom:30px;">Illustrative only — based on the assumptions you set.</div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:30px;">
           <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
-            <div id="callsFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">150</div>
+            <div id="callsFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">45</div>
             <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Booked calls</div>
           </div>
           <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
-            <div id="revPerFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">$36,000</div>
+            <div id="revPerFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">$6,480</div>
             <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Value / appearance</div>
           </div>
           <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
@@ -121,8 +131,8 @@
             <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Total ears reached</div>
           </div>
           <div style="background:#FFFFFF; border:1px solid #E8E3DA; border-radius:12px; padding:16px 16px;">
-            <div class="js-count" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">10</div>
-            <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Podcasts booked</div>
+            <div id="heldFmt" style="color:#1C1A17; font-family:'Fraunces',Georgia,serif; font-size:24px; font-weight:600; letter-spacing:-0.01em; font-variant-numeric:tabular-nums;">27</div>
+            <div style="font-size:11px; letter-spacing:0.04em; color:#6B6459; text-transform:uppercase; font-weight:600; margin-top:5px;">Calls held</div>
           </div>
         </div>
 
@@ -130,7 +140,7 @@
     </div>
 
     <div class="roi-footer" style="padding:18px 34px; border-top:1px solid #E8E3DA;">
-      <p id="methodology" style="margin:0 0 10px; font-size:12px; line-height:1.6; color:#6B6459;">Estimate only, across 10 podcast appearances. Assumes ~1 in 100 listeners (1%) books a call with you per appearance, then applies your close rate. Actual results depend on show fit, your offer, and follow-up — the exact levers we dial in with clients.</p>
+      <p id="methodology" style="margin:0 0 10px; font-size:12px; line-height:1.6; color:#6B6459;">Estimate only, across 10 podcast appearances. Assumes ~1 in 333 listeners (0.3%) books a call with you per appearance, 60% of booked calls show up, then applies your close rate. Actual results depend on show fit, your offer, and follow-up — the exact levers we dial in with clients.</p>
       <p style="margin:0; font-size:11px; line-height:1.6; color:#A9A193;"><span style="font-weight:600; color:#6B6459;">Earnings disclaimer:</span> The figures shown are illustrative projections based on the inputs you select, not a promise, guarantee, or representation of actual or future earnings. Results vary and depend on many factors outside our control, including your offer, market, effort, and follow-through. PodcastGuest.io does not guarantee any specific outcome or amount of revenue. Nothing here constitutes financial, legal, or professional advice.</p>
     </div>
 
@@ -147,7 +157,8 @@
     closeRate: 30,
     listeners: 1500,
     appearances: 10,
-    conv: 1,
+    conv: 0.3,
+    showRate: 60,
     animatedRevenue: 0
   };
 
@@ -157,16 +168,19 @@
     listenersSlider: document.getElementById('listenersSlider'),
     appearancesSlider: document.getElementById('appearancesSlider'),
     convSlider: document.getElementById('convSlider'),
+    showRateSlider: document.getElementById('showRateSlider'),
 
     dealValueFmt: document.getElementById('dealValueFmt'),
     closeRateFmt: document.getElementById('closeRateFmt'),
     listenersFmt: document.getElementById('listenersFmt'),
     convFmt: document.getElementById('convFmt'),
+    showRateFmt: document.getElementById('showRateFmt'),
     countEls: document.querySelectorAll('.js-count'),
 
     heroRevenue: document.getElementById('heroRevenue'),
     clientsFmt: document.getElementById('clientsFmt'),
     callsFmt: document.getElementById('callsFmt'),
+    heldFmt: document.getElementById('heldFmt'),
     revPerFmt: document.getElementById('revPerFmt'),
     reachFmt: document.getElementById('reachFmt'),
     methodology: document.getElementById('methodology')
@@ -177,7 +191,8 @@
     closeRateSlider: [5, 90],
     listenersSlider: [100, 50000],
     appearancesSlider: [1, 30],
-    convSlider: [0.1, 5]
+    convSlider: [0.1, 5],
+    showRateSlider: [1, 100]
   };
 
   // ---- formatting helpers (ported from DCLogic) ----
@@ -190,7 +205,7 @@
 
   function computeRevenue(s) {
     s = s || state;
-    return s.listeners * rate() * count() * (s.closeRate / 100) * s.dealValue;
+    return s.listeners * rate() * count() * (s.showRate / 100) * (s.closeRate / 100) * s.dealValue;
   }
 
   // ---- hero count-up tween (ported from DCLogic.tweenTo) ----
@@ -222,8 +237,9 @@
   function renderStatic() {
     var s = state;
     var c = count();
-    var callsTotal = s.listeners * rate() * c;
-    var clientsTotal = callsTotal * (s.closeRate / 100);
+    var callsBooked = s.listeners * rate() * c;
+    var callsHeld = callsBooked * (s.showRate / 100);
+    var clientsTotal = callsHeld * (s.closeRate / 100);
     var revenue = computeRevenue();
     var revPerAppearance = c ? revenue / c : 0;
     var reachTotal = s.listeners * c;
@@ -233,6 +249,7 @@
     els.closeRateFmt.textContent = s.closeRate + '%';
     els.listenersFmt.textContent = num(s.listeners);
     els.convFmt.textContent = s.conv + '%';
+    els.showRateFmt.textContent = s.showRate + '%';
     for (var i = 0; i < els.countEls.length; i++) {
       els.countEls[i].textContent = num(c);
     }
@@ -242,14 +259,17 @@
     setSliderFill(els.listenersSlider, s.listeners, rangeSpec.listenersSlider[0], rangeSpec.listenersSlider[1]);
     setSliderFill(els.appearancesSlider, s.appearances, rangeSpec.appearancesSlider[0], rangeSpec.appearancesSlider[1]);
     setSliderFill(els.convSlider, s.conv, rangeSpec.convSlider[0], rangeSpec.convSlider[1]);
+    setSliderFill(els.showRateSlider, s.showRate, rangeSpec.showRateSlider[0], rangeSpec.showRateSlider[1]);
 
     els.clientsFmt.textContent = num(clientsTotal);
-    els.callsFmt.textContent = num(callsTotal);
+    els.callsFmt.textContent = num(callsBooked);
+    els.heldFmt.textContent = num(callsHeld);
     els.revPerFmt.textContent = money(revPerAppearance);
     els.reachFmt.textContent = num(reachTotal);
 
     els.methodology.textContent = 'Estimate only, across ' + c + ' podcast appearances. Assumes ~1 in ' +
-      oneIn + ' listeners (' + s.conv + '%) books a call with you per appearance, then applies your close rate. ' +
+      oneIn + ' listeners (' + s.conv + '%) books a call with you per appearance, ' + s.showRate +
+      '% of booked calls show up, then applies your close rate. ' +
       'Actual results depend on show fit, your offer, and follow-up — the exact levers we dial in with clients.';
 
     return revenue;
@@ -266,6 +286,7 @@
   els.listenersSlider.addEventListener('input', function (e) { set('listeners', e.target.value); });
   els.appearancesSlider.addEventListener('input', function (e) { set('appearances', e.target.value); });
   els.convSlider.addEventListener('input', function (e) { set('conv', e.target.value); });
+  els.showRateSlider.addEventListener('input', function (e) { set('showRate', e.target.value); });
 
   // ---- initial paint + hero count-up from 0 (ported from componentDidMount) ----
   var initialRevenue = renderStatic();
